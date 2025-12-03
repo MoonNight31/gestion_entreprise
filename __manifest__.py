@@ -12,7 +12,7 @@
     'author': "MoonDev",
     'version': '1.0',
     'category': 'Business',
-    'depends': ['base', 'gestion_ecole'],
+    'depends': ['base', 'gestion_ecole', 'gestion_contrat'],
     'data': [
         'security/ir.model.access.csv',
         'views/views.xml',
