@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+
+    <!-- ========== GROUPE D'ENTREPRISES ========== -->
+    <record id="view_groupe_tree" model="ir.ui.view">
+        <field name="name">entreprise.groupe.tree</field>
+        <field name="model">entreprise.groupe</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="id" string="ID" width="50px"/>
+                <field name="nom"/>
+                <field name="siren"/>
+                <field name="siege_social"/>
+                <field name="entreprise_count"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_groupe_form" model="ir.ui.view">
+        <field name="name">entreprise.groupe.form</field>
+        <field name="model">entreprise.groupe</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="nom"/>
+                            <field name="siren"/>
+                        </group>
+                        <group>
+                            <field name="siege_social"/>
+                            <field name="entreprise_count"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Entreprises du groupe">
+                            <field name="entreprise_ids">
+                                <tree>
+                                    <field name="nom"/>
+                                    <field name="siret"/>
+                                    <field name="adresse"/>
+                                    <field name="salarie_count"/>
+                                    <field name="contrat_count"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_groupe" model="ir.actions.act_window">
+        <field name="name">Groupes d'Entreprises</field>
+        <field name="res_model">entreprise.groupe</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- ========== ENTREPRISE ========== -->
+    <record id="view_entreprise_tree" model="ir.ui.view">
+        <field name="name">entreprise.entreprise.tree</field>
+        <field name="model">entreprise.entreprise</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="id" string="ID" width="50px"/>
+                <field name="nom"/>
+                <field name="siret"/>
+                <field name="groupe_id"/>
+                <field name="salarie_count"/>
+                <field name="contrat_count"/>
+                <field name="telephone"/>
+                <field name="email"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_entreprise_form" model="ir.ui.view">
+        <field name="name">entreprise.entreprise.form</field>
+        <field name="model">entreprise.entreprise</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="nom"/>
+                            <field name="siret"/>
+                            <field name="groupe_id"/>
+                        </group>
+                        <group>
+                            <field name="telephone"/>
+                            <field name="email"/>
+                            <field name="salarie_count"/>
+                            <field name="contrat_count"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="adresse" placeholder="Adresse complète..."/>
+                    </group>
+                    <notebook>
+                        <page string="Salariés">
+                            <field name="personne_ids">
+                                <tree>
+                                    <field name="display_name"/>
+                                    <field name="email"/>
+                                    <field name="telephone"/>
+                                    <field name="poste"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Contrats">
+                            <field name="contrat_ids">
+                                <tree>
+                                    <field name="type_contrat"/>
+                                    <field name="personne_etudiant_id"/>
+                                    <field name="personne_tuteur_id"/>
+                                    <field name="date_started"/>
+                                    <field name="date_ended"/>
+                                    <field name="duree_jours"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_entreprise" model="ir.actions.act_window">
+        <field name="name">Entreprises</field>
+        <field name="res_model">entreprise.entreprise</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- ========== MENU ========== -->
+    <menuitem id="menu_entreprise_root" 
+              name="Gestion Entreprise" 
+              sequence="20" 
+              web_icon="base,static/description/icon.png"/>
+
+    <menuitem id="menu_groupe" 
+              name="Groupes d'Entreprises" 
+              parent="menu_entreprise_root" 
+              action="action_groupe" 
+              sequence="1"/>
+
+    <menuitem id="menu_entreprise" 
+              name="Entreprises" 
+              parent="menu_entreprise_root" 
+              action="action_entreprise" 
+              sequence="2"/>
+
+  </data>
+</odoo>
