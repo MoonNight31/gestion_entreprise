@@ -63,7 +63,6 @@
         <field name="model">entreprise.entreprise</field>
         <field name="arch" type="xml">
             <tree>
-                <field name="id" string="ID" width="50px"/>
                 <field name="nom"/>
                 <field name="siret"/>
                 <field name="groupe_id"/>
@@ -101,7 +100,8 @@
                         <page string="Salariés">
                             <field name="personne_ids">
                                 <tree>
-                                    <field name="display_name"/>
+                                    <field name="name"/>
+                                    <field name="prenom"/>
                                     <field name="email"/>
                                     <field name="telephone"/>
                                     <field name="poste"/>

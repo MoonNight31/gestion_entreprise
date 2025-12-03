@@ -14,7 +14,7 @@ class EntrepriseGroupe(models.Model):
     
     # Relations inverses
     entreprise_ids = fields.One2many('entreprise.entreprise', 'groupe_id', string="Entreprises du groupe")
-    entreprise_count = fields.Integer(string="Nombre d'entreprises", compute='_compute_entreprise_count')
+    entreprise_count = fields.Integer(string="Nombre d'entreprises", compute='_compute_entreprise_count', store=True)
 
     @api.depends('entreprise_ids')
     def _compute_entreprise_count(self):
@@ -41,8 +41,8 @@ class EntrepriseEntreprise(models.Model):
     personne_ids = fields.One2many('school.personne', 'entreprise_id', string="Salariés")
     contrat_ids = fields.One2many('contrat.contrat', 'entreprise_id', string="Contrats")
     
-    salarie_count = fields.Integer(string="Nombre de salariés", compute='_compute_salarie_count')
-    contrat_count = fields.Integer(string="Nombre de contrats", compute='_compute_contrat_count')
+    salarie_count = fields.Integer(string="Nombre de salariés", compute='_compute_salarie_count', store=True)
+    contrat_count = fields.Integer(string="Nombre de contrats", compute='_compute_contrat_count', store=True)
 
     @api.depends('personne_ids')
     def _compute_salarie_count(self):
