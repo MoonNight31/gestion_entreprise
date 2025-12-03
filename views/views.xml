@@ -2,6 +2,29 @@
 <odoo>
   <data>
 
+    <!-- Extension de la vue Personne pour ajouter le champ entreprise_id -->
+    <record id="view_personne_tree_entreprise" model="ir.ui.view">
+        <field name="name">school.personne.tree.entreprise</field>
+        <field name="model">school.personne</field>
+        <field name="inherit_id" ref="gestion_ecole.view_personne_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree/field[@name='formation_id']" position="after">
+                <field name="entreprise_id"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_personne_form_entreprise" model="ir.ui.view">
+        <field name="name">school.personne.form.entreprise</field>
+        <field name="model">school.personne</field>
+        <field name="inherit_id" ref="gestion_ecole.view_personne_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group/field[@name='formation_id']" position="after">
+                <field name="entreprise_id" invisible="type_profil != 'salarie'"/>
+            </xpath>
+        </field>
+    </record>
+
     <!-- ========== GROUPE D'ENTREPRISES ========== -->
     <record id="view_groupe_tree" model="ir.ui.view">
         <field name="name">entreprise.groupe.tree</field>

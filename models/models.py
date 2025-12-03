@@ -2,6 +2,16 @@
 
 from odoo import models, fields, api
 
+# ========== EXTENSION DU MODÈLE PERSONNE ==========
+class SchoolPersonne(models.Model):
+    _inherit = 'school.personne'
+    
+    # Ajout du champ entreprise_id (ajouté par le module gestion_entreprise)
+    entreprise_id = fields.Many2one('entreprise.entreprise', string="Entreprise", 
+                                    ondelete='set null',
+                                    help="Entreprise d'emploi pour les salariés")
+
+
 # ========== GROUPE D'ENTREPRISES ==========
 class EntrepriseGroupe(models.Model):
     _name = 'entreprise.groupe'
