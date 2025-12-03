@@ -10,6 +10,13 @@ class PersonneExtend(models.Model):
     poste = fields.Char(string="Poste")
 
 
+# ========== EXTENSION DU MODÈLE CONTRAT ==========
+class ContratExtend(models.Model):
+    _inherit = 'contrat.contrat'
+    
+    entreprise_id = fields.Many2one('entreprise.entreprise', string="Entreprise")
+
+
 # ========== GROUPE D'ENTREPRISES ==========
 class EntrepriseGroupe(models.Model):
     _name = 'entreprise.groupe'
