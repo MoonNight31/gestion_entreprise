@@ -2,21 +2,6 @@
 
 from odoo import models, fields, api
 
-# ========== EXTENSION DU MODÈLE PERSONNE ==========
-class PersonneExtend(models.Model):
-    _inherit = 'school.personne'
-    
-    entreprise_id = fields.Many2one('entreprise.entreprise', string="Entreprise")
-    poste = fields.Char(string="Poste")
-
-
-# ========== EXTENSION DU MODÈLE CONTRAT ==========
-class ContratExtend(models.Model):
-    _inherit = 'contrat.contrat'
-    
-    entreprise_id = fields.Many2one('entreprise.entreprise', string="Entreprise")
-
-
 # ========== GROUPE D'ENTREPRISES ==========
 class EntrepriseGroupe(models.Model):
     _name = 'entreprise.groupe'
