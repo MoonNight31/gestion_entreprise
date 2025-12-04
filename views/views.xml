@@ -227,7 +227,7 @@
     <menuitem id="menu_entreprise_root" 
               name="Gestion Entreprise" 
               sequence="20" 
-              web_icon="base,static/description/icon.png"/>
+              web_icon="gestion_entreprise,static/description/icon.png"/>
 
     <menuitem id="menu_groupe" 
               name="Groupes d'Entreprises" 
