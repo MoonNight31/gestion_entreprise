@@ -39,7 +39,7 @@
                         <group string="Informations professionnelles">
                             <field name="employer_partner_id" required="1"/>
                             <field name="poste"/>
-                            <field name="type_personne" invisible="1"/>
+                            <field name="type_profil" invisible="1"/>
                             <field name="is_company" invisible="1"/>
                         </group>
                     </group>
@@ -61,8 +61,8 @@
         <field name="name">Salariés</field>
         <field name="res_model">res.partner</field>
         <field name="view_mode">tree,form</field>
-        <field name="domain">[('type_personne', '=', 'salarie'), ('is_company', '=', False)]</field>
-        <field name="context">{'default_type_personne': 'salarie', 'default_is_company': False}</field>
+        <field name="domain">[('type_profil', '=', 'salarie'), ('is_company', '=', False)]</field>
+        <field name="context">{'default_type_profil': 'salarie', 'default_is_company': False}</field>
         <field name="view_ids" eval="[(5, 0, 0),
             (0, 0, {'view_mode': 'tree', 'view_id': ref('view_salarie_tree')}),
             (0, 0, {'view_mode': 'form', 'view_id': ref('view_salarie_form')})]"/>
@@ -86,7 +86,7 @@
         <field name="inherit_id" ref="gestion_ecole.view_personne_form"/>
         <field name="arch" type="xml">
             <xpath expr="//group/field[@name='formation_id']" position="after">
-                <field name="employer_partner_id" invisible="type_personne != 'salarie'"/>
+                <field name="employer_partner_id" invisible="type_profil != 'salarie'"/>
             </xpath>
         </field>
     </record>
