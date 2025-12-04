@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': "Gestion Entreprise",
-    'icon': '/base/static/description/entreprise.png',
+    'icon': '/gestion_entreprise/static/description/icon.png',
     'summary': "Gestion des groupes d'entreprises et des entreprises",
     'description': """
         Module de gestion des entreprises
