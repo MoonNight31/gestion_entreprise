@@ -5,14 +5,14 @@
     <!-- ========== SALARIÉS (Vue spécifique) ========== -->
     <record id="view_salarie_tree" model="ir.ui.view">
         <field name="name">salarie.tree</field>
-        <field name="model">school.personne</field>
+        <field name="model">res.partner</field>
         <field name="arch" type="xml">
             <tree string="Salariés">
-                <field name="nom"/>
-                <field name="prenom"/>
+                <field name="name"/>
                 <field name="email"/>
-                <field name="telephone"/>
-                <field name="entreprise_id"/>
+                <field name="phone"/>
+                <field name="mobile"/>
+                <field name="employer_partner_id"/>
                 <field name="poste"/>
             </tree>
         </field>
@@ -20,25 +20,37 @@
 
     <record id="view_salarie_form" model="ir.ui.view">
         <field name="name">salarie.form</field>
-        <field name="model">school.personne</field>
+        <field name="model">res.partner</field>
         <field name="arch" type="xml">
             <form string="Salarié">
                 <sheet>
+                    <field name="image_1920" widget="image" class="oe_avatar"/>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Nom complet" required="1"/>
+                        </h1>
+                    </div>
                     <group>
                         <group string="Informations personnelles">
-                            <field name="nom" required="1"/>
-                            <field name="prenom" required="1"/>
                             <field name="email"/>
-                            <field name="telephone"/>
+                            <field name="phone"/>
+                            <field name="mobile"/>
                         </group>
                         <group string="Informations professionnelles">
-                            <field name="entreprise_id" required="1"/>
+                            <field name="employer_partner_id" required="1"/>
                             <field name="poste"/>
-                            <field name="type_profil" invisible="1"/>
+                            <field name="type_personne" invisible="1"/>
+                            <field name="is_company" invisible="1"/>
                         </group>
                     </group>
                     <group string="Adresse">
-                        <field name="adresse" placeholder="Adresse complète..."/>
+                        <field name="street" placeholder="Rue..."/>
+                        <field name="street2"/>
+                        <div class="o_address_format">
+                            <field name="zip" placeholder="Code postal" class="o_address_zip"/>
+                            <field name="city" placeholder="Ville" class="o_address_city"/>
+                        </div>
+                        <field name="country_id" placeholder="Pays"/>
                     </group>
                 </sheet>
             </form>
@@ -47,34 +59,34 @@
 
     <record id="action_salarie" model="ir.actions.act_window">
         <field name="name">Salariés</field>
-        <field name="res_model">school.personne</field>
+        <field name="res_model">res.partner</field>
         <field name="view_mode">tree,form</field>
-        <field name="domain">[('type_profil', '=', 'salarie')]</field>
-        <field name="context">{'default_type_profil': 'salarie'}</field>
+        <field name="domain">[('type_personne', '=', 'salarie'), ('is_company', '=', False)]</field>
+        <field name="context">{'default_type_personne': 'salarie', 'default_is_company': False}</field>
         <field name="view_ids" eval="[(5, 0, 0),
             (0, 0, {'view_mode': 'tree', 'view_id': ref('view_salarie_tree')}),
             (0, 0, {'view_mode': 'form', 'view_id': ref('view_salarie_form')})]"/>
     </record>
 
-    <!-- Extension de la vue générique Personne pour ajouter le champ entreprise_id -->
+    <!-- Extension de la vue générique Personne pour ajouter le champ employer_partner_id -->
     <record id="view_personne_tree_entreprise" model="ir.ui.view">
-        <field name="name">school.personne.tree.entreprise</field>
-        <field name="model">school.personne</field>
+        <field name="name">res.partner.tree.entreprise</field>
+        <field name="model">res.partner</field>
         <field name="inherit_id" ref="gestion_ecole.view_personne_tree"/>
         <field name="arch" type="xml">
             <xpath expr="//tree/field[@name='formation_id']" position="after">
-                <field name="entreprise_id" optional="show"/>
+                <field name="employer_partner_id" optional="show"/>
             </xpath>
         </field>
     </record>
 
     <record id="view_personne_form_entreprise" model="ir.ui.view">
-        <field name="name">school.personne.form.entreprise</field>
-        <field name="model">school.personne</field>
+        <field name="name">res.partner.form.entreprise</field>
+        <field name="model">res.partner</field>
         <field name="inherit_id" ref="gestion_ecole.view_personne_form"/>
         <field name="arch" type="xml">
             <xpath expr="//group/field[@name='formation_id']" position="after">
-                <field name="entreprise_id" invisible="type_profil != 'salarie'"/>
+                <field name="employer_partner_id" invisible="type_personne != 'salarie'"/>
             </xpath>
         </field>
     </record>
@@ -85,7 +97,6 @@
         <field name="model">entreprise.groupe</field>
         <field name="arch" type="xml">
             <tree>
-                <field name="id" string="ID" width="50px"/>
                 <field name="nom"/>
                 <field name="siren"/>
                 <field name="siege_social"/>
@@ -114,9 +125,9 @@
                         <page string="Entreprises du groupe">
                             <field name="entreprise_ids">
                                 <tree>
-                                    <field name="nom"/>
+                                    <field name="name"/>
                                     <field name="siret"/>
-                                    <field name="adresse"/>
+                                    <field name="city"/>
                                     <field name="salarie_count"/>
                                 </tree>
                             </field>
@@ -135,49 +146,60 @@
 
     <!-- ========== ENTREPRISE ========== -->
     <record id="view_entreprise_tree" model="ir.ui.view">
-        <field name="name">entreprise.entreprise.tree</field>
-        <field name="model">entreprise.entreprise</field>
+        <field name="name">entreprise.tree</field>
+        <field name="model">res.partner</field>
         <field name="arch" type="xml">
-            <tree>
-                <field name="nom"/>
+            <tree string="Entreprises">
+                <field name="name"/>
                 <field name="siret"/>
                 <field name="groupe_id"/>
                 <field name="salarie_count"/>
-                <field name="telephone"/>
+                <field name="phone"/>
                 <field name="email"/>
             </tree>
         </field>
     </record>
 
     <record id="view_entreprise_form" model="ir.ui.view">
-        <field name="name">entreprise.entreprise.form</field>
-        <field name="model">entreprise.entreprise</field>
+        <field name="name">entreprise.form</field>
+        <field name="model">res.partner</field>
         <field name="arch" type="xml">
-            <form>
+            <form string="Entreprise">
                 <sheet>
+                    <field name="image_1920" widget="image" class="oe_avatar"/>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Nom de l'entreprise" required="1"/>
+                        </h1>
+                    </div>
                     <group>
                         <group>
-                            <field name="nom"/>
                             <field name="siret"/>
                             <field name="groupe_id"/>
+                            <field name="is_company" invisible="1"/>
                         </group>
                         <group>
-                            <field name="telephone"/>
+                            <field name="phone"/>
                             <field name="email"/>
                             <field name="salarie_count"/>
                         </group>
                     </group>
-                    <group>
-                        <field name="adresse" placeholder="Adresse complète..."/>
+                    <group string="Adresse">
+                        <field name="street" placeholder="Rue..."/>
+                        <field name="street2"/>
+                        <div class="o_address_format">
+                            <field name="zip" placeholder="Code postal" class="o_address_zip"/>
+                            <field name="city" placeholder="Ville" class="o_address_city"/>
+                        </div>
+                        <field name="country_id" placeholder="Pays"/>
                     </group>
                     <notebook>
                         <page string="Salariés">
-                            <field name="personne_ids">
+                            <field name="employee_ids">
                                 <tree>
-                                    <field name="nom"/>
-                                    <field name="prenom"/>
+                                    <field name="name"/>
                                     <field name="email"/>
-                                    <field name="telephone"/>
+                                    <field name="phone"/>
                                     <field name="poste"/>
                                 </tree>
                             </field>
@@ -190,8 +212,13 @@
 
     <record id="action_entreprise" model="ir.actions.act_window">
         <field name="name">Entreprises</field>
-        <field name="res_model">entreprise.entreprise</field>
+        <field name="res_model">res.partner</field>
         <field name="view_mode">tree,form</field>
+        <field name="domain">[('is_company', '=', True)]</field>
+        <field name="context">{'default_is_company': True}</field>
+        <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'tree', 'view_id': ref('view_entreprise_tree')}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('view_entreprise_form')})]"/>
     </record>
 
     <!-- ========== MENU ========== -->
