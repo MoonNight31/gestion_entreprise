@@ -2,6 +2,7 @@
 {
     'name': "Gestion Entreprise",
     'icon': '/gestion_entreprise/static/description/icon.png',
+    'web_icon': 'gestion_entreprise/static/description/icon.png',
     'summary': "Gestion des groupes d'entreprises et des entreprises",
     'description': """
         Module de gestion des entreprises
