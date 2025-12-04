@@ -149,7 +149,7 @@
         <field name="name">entreprise.tree</field>
         <field name="model">res.partner</field>
         <field name="arch" type="xml">
-            <tree string="Entreprises">
+            <tree string="Contacts Entreprise">
                 <field name="name"/>
                 <field name="siret"/>
                 <field name="groupe_id"/>
@@ -164,7 +164,7 @@
         <field name="name">entreprise.form</field>
         <field name="model">res.partner</field>
         <field name="arch" type="xml">
-            <form string="Entreprise">
+            <form string="Contact Entreprise">
                 <sheet>
                     <field name="image_1920" widget="image" class="oe_avatar"/>
                     <div class="oe_title">
@@ -211,7 +211,7 @@
     </record>
 
     <record id="action_entreprise" model="ir.actions.act_window">
-        <field name="name">Entreprises</field>
+        <field name="name">Contacts Entreprise</field>
         <field name="res_model">res.partner</field>
         <field name="view_mode">tree,form</field>
         <field name="domain">[('is_company', '=', True)]</field>
@@ -234,7 +234,7 @@
               sequence="1"/>
 
     <menuitem id="menu_entreprise" 
-              name="Entreprises" 
+              name="Contacts Entreprise" 
               parent="menu_entreprise_root" 
               action="action_entreprise" 
               sequence="2"/>
