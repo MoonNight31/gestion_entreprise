@@ -2,14 +2,68 @@
 <odoo>
   <data>
 
-    <!-- Extension de la vue Personne pour ajouter le champ entreprise_id -->
+    <!-- ========== SALARIÉS (Vue spécifique) ========== -->
+    <record id="view_salarie_tree" model="ir.ui.view">
+        <field name="name">salarie.tree</field>
+        <field name="model">school.personne</field>
+        <field name="arch" type="xml">
+            <tree string="Salariés">
+                <field name="nom"/>
+                <field name="prenom"/>
+                <field name="email"/>
+                <field name="telephone"/>
+                <field name="entreprise_id"/>
+                <field name="poste"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_salarie_form" model="ir.ui.view">
+        <field name="name">salarie.form</field>
+        <field name="model">school.personne</field>
+        <field name="arch" type="xml">
+            <form string="Salarié">
+                <sheet>
+                    <group>
+                        <group string="Informations personnelles">
+                            <field name="nom" required="1"/>
+                            <field name="prenom" required="1"/>
+                            <field name="email"/>
+                            <field name="telephone"/>
+                        </group>
+                        <group string="Informations professionnelles">
+                            <field name="entreprise_id" required="1"/>
+                            <field name="poste"/>
+                            <field name="type_profil" invisible="1"/>
+                        </group>
+                    </group>
+                    <group string="Adresse">
+                        <field name="adresse" placeholder="Adresse complète..."/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_salarie" model="ir.actions.act_window">
+        <field name="name">Salariés</field>
+        <field name="res_model">school.personne</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('type_profil', '=', 'salarie')]</field>
+        <field name="context">{'default_type_profil': 'salarie'}</field>
+        <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'tree', 'view_id': ref('view_salarie_tree')}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('view_salarie_form')})]"/>
+    </record>
+
+    <!-- Extension de la vue générique Personne pour ajouter le champ entreprise_id -->
     <record id="view_personne_tree_entreprise" model="ir.ui.view">
         <field name="name">school.personne.tree.entreprise</field>
         <field name="model">school.personne</field>
         <field name="inherit_id" ref="gestion_ecole.view_personne_tree"/>
         <field name="arch" type="xml">
             <xpath expr="//tree/field[@name='formation_id']" position="after">
-                <field name="entreprise_id"/>
+                <field name="entreprise_id" optional="show"/>
             </xpath>
         </field>
     </record>
@@ -157,6 +211,12 @@
               parent="menu_entreprise_root" 
               action="action_entreprise" 
               sequence="2"/>
+
+    <menuitem id="menu_salarie" 
+              name="Salariés" 
+              parent="menu_entreprise_root" 
+              action="action_salarie" 
+              sequence="3"/>
 
   </data>
 </odoo>
