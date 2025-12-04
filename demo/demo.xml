@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        
+        <!-- Groupes d'Entreprises -->
+        <record id="demo_groupe_tech_global" model="entreprise.groupe">
+            <field name="nom">Tech Global Group</field>
+            <field name="siren">123456789</field>
+            <field name="siege_social">50 Avenue Montaigne, 75008 Paris</field>
+        </record>
+
+        <record id="demo_groupe_services_plus" model="entreprise.groupe">
+            <field name="nom">Services Plus Holding</field>
+            <field name="siren">987654321</field>
+            <field name="siege_social">15 Rue de la Bourse, 75002 Paris</field>
+        </record>
+
+        <!-- Entreprises -->
+        <record id="demo_entreprise_digisolutions" model="res.partner">
+            <field name="name">DigiSolutions France</field>
+            <field name="email">contact@digisolutions.fr</field>
+            <field name="phone">+33 1 40 50 60 70</field>
+            <field name="is_company" eval="True"/>
+            <field name="siret">12345678900012</field>
+            <field name="groupe_id" ref="demo_groupe_tech_global"/>
+            <field name="street">100 Boulevard Haussmann</field>
+            <field name="zip">75008</field>
+            <field name="city">Paris</field>
+        </record>
+
+        <record id="demo_entreprise_innovtech" model="res.partner">
+            <field name="name">InnovTech SARL</field>
+            <field name="email">info@innovtech.fr</field>
+            <field name="phone">+33 4 72 80 90 00</field>
+            <field name="is_company" eval="True"/>
+            <field name="siret">98765432100034</field>
+            <field name="groupe_id" ref="demo_groupe_tech_global"/>
+            <field name="street">45 Rue de la République</field>
+            <field name="zip">69002</field>
+            <field name="city">Lyon</field>
+        </record>
+
+        <record id="demo_entreprise_consulting_pro" model="res.partner">
+            <field name="name">Consulting Pro</field>
+            <field name="email">contact@consultingpro.fr</field>
+            <field name="phone">+33 1 45 55 65 75</field>
+            <field name="is_company" eval="True"/>
+            <field name="siret">11122233300056</field>
+            <field name="groupe_id" ref="demo_groupe_services_plus"/>
+            <field name="street">22 Avenue de l'Opéra</field>
+            <field name="zip">75001</field>
+            <field name="city">Paris</field>
+        </record>
+
+        <record id="demo_entreprise_webfactory" model="res.partner">
+            <field name="name">Web Factory</field>
+            <field name="email">hello@webfactory.fr</field>
+            <field name="phone">+33 5 56 78 90 12</field>
+            <field name="is_company" eval="True"/>
+            <field name="siret">44455566600078</field>
+            <field name="street">8 Cours de l'Intendance</field>
+            <field name="zip">33000</field>
+            <field name="city">Bordeaux</field>
+        </record>
+
+        <!-- Salariés -->
+        <record id="demo_salarie_sophie" model="res.partner">
+            <field name="name">Sophie Moreau</field>
+            <field name="email">sophie.moreau@digisolutions.fr</field>
+            <field name="phone">+33 6 11 22 33 44</field>
+            <field name="type_profil">salarie</field>
+            <field name="employer_partner_id" ref="demo_entreprise_digisolutions"/>
+            <field name="poste">Responsable RH</field>
+            <field name="is_company" eval="False"/>
+            <field name="street">32 Rue de Vaugirard</field>
+            <field name="zip">75015</field>
+            <field name="city">Paris</field>
+        </record>
+
+        <record id="demo_salarie_thomas" model="res.partner">
+            <field name="name">Thomas Lambert</field>
+            <field name="email">thomas.lambert@digisolutions.fr</field>
+            <field name="phone">+33 6 22 33 44 55</field>
+            <field name="type_profil">salarie</field>
+            <field name="employer_partner_id" ref="demo_entreprise_digisolutions"/>
+            <field name="poste">Lead Developer</field>
+            <field name="is_company" eval="False"/>
+            <field name="street">18 Rue Mouffetard</field>
+            <field name="zip">75005</field>
+            <field name="city">Paris</field>
+        </record>
+
+        <record id="demo_salarie_julie" model="res.partner">
+            <field name="name">Julie Fontaine</field>
+            <field name="email">julie.fontaine@innovtech.fr</field>
+            <field name="phone">+33 6 33 44 55 66</field>
+            <field name="type_profil">salarie</field>
+            <field name="employer_partner_id" ref="demo_entreprise_innovtech"/>
+            <field name="poste">Chef de Projet</field>
+            <field name="is_company" eval="False"/>
+            <field name="street">5 Place Bellecour</field>
+            <field name="zip">69002</field>
+            <field name="city">Lyon</field>
+        </record>
+
+        <record id="demo_salarie_pierre" model="res.partner">
+            <field name="name">Pierre Girard</field>
+            <field name="email">pierre.girard@consultingpro.fr</field>
+            <field name="phone">+33 6 44 55 66 77</field>
+            <field name="type_profil">salarie</field>
+            <field name="employer_partner_id" ref="demo_entreprise_consulting_pro"/>
+            <field name="poste">Consultant Senior</field>
+            <field name="is_company" eval="False"/>
+            <field name="street">12 Rue de Rivoli</field>
+            <field name="zip">75004</field>
+            <field name="city">Paris</field>
+        </record>
+
+        <record id="demo_salarie_laura" model="res.partner">
+            <field name="name">Laura Blanc</field>
+            <field name="email">laura.blanc@webfactory.fr</field>
+            <field name="phone">+33 6 55 66 77 88</field>
+            <field name="type_profil">salarie</field>
+            <field name="employer_partner_id" ref="demo_entreprise_webfactory"/>
+            <field name="poste">UX Designer</field>
+            <field name="is_company" eval="False"/>
+            <field name="street">28 Rue Sainte-Catherine</field>
+            <field name="zip">33000</field>
+            <field name="city">Bordeaux</field>
+        </record>
+
+    </data>
+</odoo>
