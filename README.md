@@ -1,102 +1,54 @@
 # Module Gestion Entreprise
 
-Module Odoo pour la gestion des groupes d'entreprises, des entreprises et de leurs salariés.
+Module Odoo 17 pour la gestion des entreprises et des relations employeur-salarié.
 
-## Description
+## 🎯 Fonctionnalités
 
-Ce module permet de gérer :
-- **Groupes d'entreprises** : Regroupement de plusieurs entreprises sous une même entité (SIREN, siège social)
-- **Entreprises** : Informations détaillées sur chaque entreprise (SIRET, adresse, contacts)
-- **Salariés** : Liaison avec le module `gestion_ecole` pour gérer les personnes rattachées aux entreprises
-- **Contrats** : Suivi des contrats associés à chaque entreprise
+- **Groupes d'Entreprises** : Gestion des holdings et groupes
+- **Contacts Entreprise** : Gestion des sociétés avec extension res.partner
+- **Salariés** : Rattachement des employés aux entreprises
+- **Statistiques** : Compteurs automatiques de salariés et entreprises
 
-## Fonctionnalités
+## 📋 Architecture
 
-### Groupes d'Entreprises
-- Gestion du nom, SIREN et siège social
-- Vue d'ensemble des entreprises du groupe
-- Compteur automatique du nombre d'entreprises
+### Extension de `res.partner` (Entreprises et Salariés)
+- `groupe_id` : Many2one vers entreprise.groupe
+- `siret` : SIRET de l'entreprise
+- `employer_partner_id` : Many2one vers l'entreprise employeur (pour les salariés)
+- `employee_ids` : One2many vers les salariés
+- `salarie_count` : Compteur calculé du nombre de salariés
 
-### Entreprises
-- Informations complètes (nom, SIRET, adresse, téléphone, email)
-- Rattachement à un groupe d'entreprises (optionnel)
-- Liste des salariés avec leurs informations de contact
-- Liste des contrats en cours
-- Compteurs automatiques (nombre de salariés, nombre de contrats)
+### Modèle `entreprise.groupe`
+- `nom` : Nom du groupe
+- `siren` : SIREN du groupe
+- `siege_social` : Adresse du siège
+- `entreprise_ids` : One2many vers les entreprises
+- `entreprise_count` : Compteur calculé
 
-## Dépendances
+## 🎨 Vues dédiées
 
-- `base` : Module de base Odoo
-- `gestion_ecole` : Module de gestion des personnes (étudiants, tuteurs, etc.)
+- **Contacts Entreprise** : Vue pour les sociétés (`is_company=True`)
+- **Salariés** : Vue pour les employés avec entreprise employeur
+- **Groupes** : Vue avec liste des entreprises membres
 
-## Installation
+## 🔄 Intégration
 
-1. Copiez le module dans le dossier `addons` de votre instance Odoo
-2. Redémarrez le serveur Odoo
-3. Activez le mode développeur
-4. Allez dans Apps et cliquez sur "Mettre à jour la liste des applications"
-5. Recherchez "Gestion Entreprise" et installez le module
+Ce module étend les vues de `gestion_ecole` pour ajouter :
+- Champ `employer_partner_id` dans les vues personnes
+- Onglet Salariés dans les vues entreprises
 
-## Structure du Module
+## 📦 Installation
 
-```
-gestion_entreprise/
-├── __init__.py
-├── __manifest__.py
-├── README.md
-├── models/
-│   ├── __init__.py
-│   └── models.py
-├── security/
-│   └── ir.model.access.csv
-└── views/
-    └── views.xml
-```
+1. **Prérequis** : Module `gestion_ecole` installé
+2. Placer le module dans le dossier addons
+3. Redémarrer Odoo : `sudo systemctl restart odoo`
+4. Installer "Gestion Entreprise"
 
-## Modèles de données
+## 🔗 Dépendances
 
-### `entreprise.groupe`
-| Champ | Type | Description |
-|-------|------|-------------|
-| nom | Char | Nom du groupe (requis) |
-| siren | Char | Numéro SIREN |
-| siege_social | Char | Adresse du siège social |
-| entreprise_ids | One2many | Liste des entreprises du groupe |
-| entreprise_count | Integer | Nombre d'entreprises (calculé) |
+- `base` (module natif Odoo)
+- `gestion_ecole` (module personnalisé)
 
-### `entreprise.entreprise`
-| Champ | Type | Description |
-|-------|------|-------------|
-| nom | Char | Nom de l'entreprise (requis) |
-| siret | Char | Numéro SIRET |
-| adresse | Text | Adresse complète |
-| telephone | Char | Numéro de téléphone |
-| email | Char | Adresse email |
-| groupe_id | Many2one | Groupe d'appartenance |
-| personne_ids | One2many | Liste des salariés |
-| contrat_ids | One2many | Liste des contrats |
-| salarie_count | Integer | Nombre de salariés (calculé) |
-| contrat_count | Integer | Nombre de contrats (calculé) |
+## 👨‍💻 Auteur
 
-## Utilisation
-
-1. Accédez au menu "Gestion Entreprise" depuis la barre de navigation
-2. Créez d'abord vos groupes d'entreprises (si nécessaire)
-3. Créez vos entreprises et rattachez-les à un groupe
-4. Les salariés et contrats seront automatiquement liés depuis le module `gestion_ecole`
-
-## Sécurité
-
-Les droits d'accès sont configurés pour le groupe `base.group_user` (utilisateurs internes) avec tous les droits (lecture, écriture, création, suppression).
-
-## Auteur
-
-**MoonDev**
-
-## Version
-
-1.0 - Version initiale
-
-## Licence
-
-Propriétaire
+MoonDev - 2025
