@@ -1,2 +1,3 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_entreprise_groupe,access.entreprise.groupe,model_entreprise_groupe,base.group_user,1,1,1,1
+access_entreprise_service,access.entreprise.service,model_entreprise_service,base.group_user,1,1,1,1
